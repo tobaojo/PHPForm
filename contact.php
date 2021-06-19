@@ -23,6 +23,7 @@ if(!empty($firstname) && !empty($email)){
     //check email is valid
     if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
         //not valid email address
+        echo 'No Valid email';
     } else {
         //passed
     }

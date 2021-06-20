@@ -38,8 +38,36 @@
   
   .form-control input:focus{
     outline: 0;
-    border-color: rgb(70, 173, 75);
+    border-color: lightpink;
+    /* border-color: rgb(70, 173, 75); */
   }
+
+  .form-control select #country{
+    border: solid 1px lightgrey;
+    border-radius: 3px;
+    width: 400px;
+    padding: 10px;
+    display: block;
+    -webkit-appearance: none;
+   -moz-appearance: none;
+  }
+
+  #textarea{
+    border: solid 1px lightgrey;
+    border-radius: 3px;
+    width: 400px;
+    padding: 10px;
+    display: block;
+}
+
+
+#textarea input:focus{
+  outline: 0;
+    border-color: rgb(70, 173, 75);
+}
+
+
+
 
   .btn{
     display: block;

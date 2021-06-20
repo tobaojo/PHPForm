@@ -3,23 +3,38 @@
 //feedback Variables
 $alert = '';
 $alertMsg = '';
-$focus = '';
+$nameErr = '';
+$emailErr = '';
+$postcodeErr = '';
 
-
+//https://phpformrrm.000webhostapp.com/index.php
 
 //get data and check submit been clicked
 if(filter_has_var(INPUT_POST,'submit')){
-$firstname = $_POST['firstname'];
-$lastname = $_POST['lastname'];
-$email = $_POST['email'];
-$telephone = $_POST['telephone'];
-$address1 = $_POST['address-1'];
-$address2 = $_POST['address-2'];
-$town = $_POST['town'];
-$county = $_POST['county'];
-$postcode = $_POST['postcode'];
-$country = $_POST['country'];
-$description = $_POST['description'];
+  if(empty($_POST['firstname'])){
+    $NameErr = "Please enter your name";
+  } else{
+    $firstname = test_input($_POST['firstname']);
+  }
+$lastname = test_input($_POST['lastname']);
+if(empty($_POST['email'])){
+  $emailErr = "Please enter your email address";
+} else {
+  $email = test_input($_POST['email']);
+}
+
+$telephone = test_input($_POST['telephone']);
+$address1 = test_input($_POST['address-1']);
+$address2 = test_input($_POST['address-2']);
+$town = test_input($_POST['town']);
+$county = test_input($_POST['county']);
+if(empty($_POST['postcode'])){
+  $postcodeErr = 'We need atleast a postcode';
+} else {
+  $postcode = test_input($_POST['postcode']);
+}
+$country = test_input($_POST['country']);
+$description = test_input($_POST['description']);
 
 //checks fields are not empty
 if(!empty($firstname) && !empty($email)&& !empty($postcode)&& !empty($description)){
@@ -33,6 +48,12 @@ if(!empty($firstname) && !empty($email)&& !empty($postcode)&& !empty($descriptio
         //passed send feedback
         $alert = 'success';
         $alertMsg = "Email has been sent!";
+        //set up email
+        $mail = "toba_ojo@hotmail.com";
+        $subject = "message from: ".$firstname;
+        $headers = "From: ".$email;
+        $message = $description;
+        mail($mail,$subject,$message,$headers);
     }
 
 } else{
@@ -41,12 +62,14 @@ if(!empty($firstname) && !empty($email)&& !empty($postcode)&& !empty($descriptio
     $alertMsg = "Please fill in all fields";
 }
 
-$mail = "toba_ojo@hotmail.com";
-$headers = "From: ".$email;
-$message = $description;
-
-
-mail($mail,$headers,$message);
+}
+//Strips unnessary characters and with the trim() function
+//removes backslashes from the user input fields too.
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 ?>
 <!DOCTYPE html>
@@ -65,11 +88,12 @@ mail($mail,$headers,$message);
 <?php if($alertMsg !=''): ?>
     <div class="<?php echo $alert; ?>"><?php echo $alertMsg; ?></div>
     <?php endif;?>
-    <form method="post" class="web-form" action="<?php echo $_SERVER['PHP_SELF'];?>">
+    <form method="post" class="web-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
     
     <div class="form-control">
           <label for="Firstname">First Name:</label><br>
           <input id="firstname" type="text" name="firstname">
+          <span class="danger"><?php echo $nameErr;?></span>
         </div>
         <div class="form-control">
           <label for="lastname">Last Name:</label><br>
@@ -78,7 +102,7 @@ mail($mail,$headers,$message);
         <div class="form-control">
           <label for="email">Email Address:</label><br>
           <input id="email" type="email" name="email" >
-
+          <span class="danger"><?php echo $emailErr;?></span>
         </div>
         <div class="form-control">
           <label for="telephone">Telephone Number:</label><br>
@@ -108,16 +132,20 @@ mail($mail,$headers,$message);
         <div class="form-control">
           <label for="postcode">Post Code:</label><br>
           <input id="post code" type="text" name="postcode">
-
+          <span class="danger"><?php echo $postcodeErr;?></span>
         </div>
         <div class="form-control">
-          <label for="country">country:</label><br>
-          <input id="country" type="text" name="country">
+          <label for="country">Country:</label><br>
+          <select id="country" type="text" name="country">
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="USA">United States of America</option>
+            <option value="Australia">Australia</option>
+          </select>
         </div>
 
         <div class="form-control">
           <label for="description">Description:</label><br>
-          <textarea name="description" id="" cols="100" rows="10"></textarea>
+          <textarea id="textarea" name="description" id="" cols="100" rows="10"></textarea>
         </div><br>
         <button class="btn" type="submit" name="submit" value="Submit">Submit</button>
     </form>

@@ -11,4 +11,11 @@
         max-width: 300px;
         max-height: auto;
     }
+
+    p{
+      justify-content: center;
+      align-items: center;
+      align-self: center;
+      align-content: center;
+    }
 }

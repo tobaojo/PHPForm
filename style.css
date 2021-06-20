@@ -6,6 +6,9 @@
 
     max-width: 1100px;
   }
+  p{
+    display: inline;
+  }
 
   form{
     display: grid;
@@ -38,18 +41,17 @@
   
   .form-control input:focus{
     outline: 0;
-    border-color: lightpink;
-    /* border-color: rgb(70, 173, 75); */
+    /* border-color: lightpink; */
+    border-color: rgb(70, 173, 75);
   }
 
-  .form-control select #country{
+   select{
     border: solid 1px lightgrey;
     border-radius: 3px;
     width: 400px;
-    padding: 10px;
+    padding: 9px;
     display: block;
-    -webkit-appearance: none;
-   -moz-appearance: none;
+ 
   }
 
   #textarea{
@@ -65,9 +67,6 @@
   outline: 0;
     border-color: rgb(70, 173, 75);
 }
-
-
-
 
   .btn{
     display: block;

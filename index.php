@@ -6,13 +6,14 @@ $alertMsg = '';
 $nameErr = '';
 $emailErr = '';
 $postcodeErr = '';
+$descriptionErr = '';
 
 //https://phpformrrm.000webhostapp.com/index.php
 
 //get data and check submit been clicked
 if(filter_has_var(INPUT_POST,'submit')){
   if(empty($_POST['firstname'])){
-    $NameErr = "Please enter your name";
+    $nameErr = "Please enter your name";
   } else{
     $firstname = test_input($_POST['firstname']);
   }
@@ -29,12 +30,17 @@ $address2 = test_input($_POST['address-2']);
 $town = test_input($_POST['town']);
 $county = test_input($_POST['county']);
 if(empty($_POST['postcode'])){
-  $postcodeErr = 'We need atleast a postcode';
+  $postcodeErr = 'We need at least a postcode';
 } else {
   $postcode = test_input($_POST['postcode']);
 }
 $country = test_input($_POST['country']);
-$description = test_input($_POST['description']);
+if(empty($_POST['description'])){
+  $descriptionErr = 'Tell us why you\'re messaging';
+} else{
+  $description = test_input($_POST['description']);
+}
+
 
 //checks fields are not empty
 if(!empty($firstname) && !empty($email)&& !empty($postcode)&& !empty($description)){
@@ -91,7 +97,7 @@ function test_input($data) {
     <form method="post" class="web-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
     
     <div class="form-control">
-          <label for="Firstname">First Name:</label><br>
+          <label for="Firstname">First Name<span class="danger">*</span>:</label><br>
           <input id="firstname" type="text" name="firstname">
           <span class="danger"><?php echo $nameErr;?></span>
         </div>
@@ -100,7 +106,7 @@ function test_input($data) {
           <input id="lastname" type="text" name="lastname">
         </div>
         <div class="form-control">
-          <label for="email">Email Address:</label><br>
+          <label for="email">Email Address<span class="danger">*</span>:</label><br>
           <input id="email" type="email" name="email" >
           <span class="danger"><?php echo $emailErr;?></span>
         </div>
@@ -130,7 +136,7 @@ function test_input($data) {
 
         </div>
         <div class="form-control">
-          <label for="postcode">Post Code:</label><br>
+          <label for="postcode">Post Code<span class="danger">*</span>:</label><br>
           <input id="post code" type="text" name="postcode">
           <span class="danger"><?php echo $postcodeErr;?></span>
         </div>
@@ -144,9 +150,15 @@ function test_input($data) {
         </div>
 
         <div class="form-control">
-          <label for="description">Description:</label><br>
+          <label for="description">Description<span class="danger">*</span>:</label><br>
           <textarea id="textarea" name="description" id="" cols="100" rows="10"></textarea>
-        </div><br>
+          <span class="danger"><?php echo $descriptionErr;?></span>
+        </div>
+
+       <br>
+       <p>Your C.V </p><br>
+        <p>Select a file <button type="#">Browse...</button> no file selected</Your>
+        <br><br>
         <button class="btn" type="submit" name="submit" value="Submit">Submit</button>
     </form>
 </div>
